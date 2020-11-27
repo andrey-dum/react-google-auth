@@ -1,16 +1,22 @@
 
-import React from 'react'
-import { Route, Switch } from "react-router";
-import { NavLink } from 'react-router-dom'
-import GoogleLogin from 'react-google-login'
+import React, { useState } from 'react'
+import { Route } from "react-router";
+import { NavLink, useHistory } from 'react-router-dom'
 
 import './App.css';
+import Profile from './components/Profile';
+import Login from './components/Login';
 
 function App() {
+  const [user, setUser] = useState(null);
+  const history = useHistory()
 
+  console.log(user)
 
   const onSuccess = (res) => {
     console.log('Login Success: currentUser:', res.profileObj);
+    setUser(res.profileObj)
+    history.push('/profile')
     alert(
       `Logged in successfully welcome ${res.profileObj.name} `
     );
@@ -25,24 +31,28 @@ function App() {
 
 
   return (
-    <div>
-      <h1>GOOGLE AUTH</h1>
-      <NavLink to="/profile">Profile</NavLink>
-      <NavLink to="/login">login</NavLink>
+    <div className="app">
+      <div className="page">
+        <h1>GOOGLE AUTH</h1>
+        <div className="app__links">
+          <NavLink to="/profile">Profile</NavLink>
+          <NavLink to="/login">login</NavLink>
+        </div>
+            
+        <Route exact path="/">
+          { user ? <Profile user={user && user} /> :  <Login onSuccess={onSuccess} onFailure={onFailure} />}
+        </Route>
 
-      <Switch>
-        {/* <Route path="profile" component={Profile} /> */}
-      </Switch>
+        <Route path="/login">
+          { user ? <Profile user={user && user} /> :  <Login onSuccess={onSuccess} onFailure={onFailure} />}
+        </Route>
+  
+        <Route path="/profile">
+            { user ? <Profile user={user && user} /> :  <Login onSuccess={onSuccess} onFailure={onFailure} />}
+        </Route>
 
-        <GoogleLogin
-          clientId="366936641222-1t094pe581i19sc76bqkj6tdr0u7c8np.apps.googleusercontent.com"
-          buttonText="Login"
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-          cookiePolicy={'single_host_origin'}
-        
-        />
       </div>
+    </div>
   );
 }
 
