@@ -27,11 +27,11 @@ function App() {
   return (
     <div>
       <h1>GOOGLE AUTH</h1>
-      <NavLink to="/profile" />
-      <NavLink to="/login" />
+      <NavLink to="/profile">Profile</NavLink>
+      <NavLink to="/login">login</NavLink>
 
       <Switch>
-        <Route to />
+        {/* <Route path="profile" component={Profile} /> */}
       </Switch>
 
         <GoogleLogin
