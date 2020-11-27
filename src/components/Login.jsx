@@ -1,14 +1,6 @@
+import React from 'react';
 
-import React from 'react'
-import { Route, Switch } from "react-router";
-import { NavLink } from 'react-router-dom'
-import GoogleLogin from 'react-google-login'
-
-import './App.css';
-
-function App() {
-
-
+function Login() {
   const onSuccess = (res) => {
     console.log('Login Success: currentUser:', res.profileObj);
     alert(
@@ -23,18 +15,9 @@ function App() {
     );
   };
 
-
   return (
     <div>
-      <h1>GOOGLE AUTH</h1>
-      <NavLink to="/profile" />
-      <NavLink to="/login" />
-
-      <Switch>
-        <Route to />
-      </Switch>
-
-        <GoogleLogin
+       <GoogleLogin
           clientId="366936641222-1t094pe581i19sc76bqkj6tdr0u7c8np.apps.googleusercontent.com"
           buttonText="Login"
           onSuccess={onSuccess}
@@ -42,12 +25,8 @@ function App() {
           cookiePolicy={'single_host_origin'}
         
         />
-      </div>
+    </div>
   );
 }
 
-export default App;
-
-
-
-
+export default Login;
